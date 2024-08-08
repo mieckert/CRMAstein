@@ -1,0 +1,51 @@
+<template>  
+
+    <div class="slds-grid slds-wrap slds-grid_vertical-align-start" lwc:ref="main" style="height: 100%; width: 100%;">
+        <div class="slds-col slds-size_1-of-1" lwc:ref="heading">
+            <div class="slds-clearfix">
+                <div class="slds-float_right slds-p-around_medium">
+                    <lightning-button-group slot="actions">
+                        <lightning-button label="Run" onclick={run}></lightning-button>
+                        <lightning-button-menu alternative-text="more" menu-alignment="right">
+                            <lightning-menu-item label="Show Data" onclick={showData}></lightning-menu-item>
+                            <lightning-menu-item label="Show Prompt" onclick={showPrompt}></lightning-menu-item>
+                        </lightning-button-menu>                                                
+                    </lightning-button-group>
+                </div>       
+                <h1 class="slds-text-heading_large slds-p-around_medium">
+                    <lightning-icon style="position:relative; top: -3px" size="medium" icon-name="utility:einstein" alternative-text="Einstein" class="slds-p-right_small"></lightning-icon>
+                    {heading}
+                    <template lwc:if={selectionChanged}>
+                        <span style="position:relative; top: -7px;" class="slds-badge slds-theme_warning slds-m-left_large slds-text-body_regular" role="alert">
+                            <lightning-icon size="xx-small" icon-name="utility:warning" alternative-text="Warning"></lightning-icon>
+                            Selection has changed since last analysis.
+                        </span>
+                    </template>            
+                </h1>
+            </div>
+        </div>
+        <template lwc:if={correctSelectMode}>
+            <div style={promptStyle} class={promptClasses}>
+                <lightning-textarea style={textareaStyle} class="prompt" name="prompt" label="Your question" value={prompt} onchange={textareaChange}></lightning-textarea>
+            </div>
+            <div style={outputStyle} class={outputClasses}>
+                <lightning-spinner lwc:if={spinner} alternative-text="Loading" size="medium"></lightning-spinner>
+                <div class="slds-scrollable_y" tabindex="0">                    
+                    <template for:each={outputParagraphs} for:item="paragraph">
+                        <p key={paragraph} class="slds-p-bottom_small">{paragraph}</p>
+                    </template>
+                    <p lwc:if={error} class="slds-text-color_error">{error}</p>         
+                </div>        
+            </div>
+        </template>
+        <template lwc:else>
+            <div class="slds-col slds-size_1-of-1">
+                <p class="slds-text-color_error">
+                    This component requires that you set a Selection Type
+                    of "Multiple selection" (in the Query tab of the 
+                    component's configuration panel).
+                </p>         
+            </div>
+        </template>
+    </div>  
+</template>
