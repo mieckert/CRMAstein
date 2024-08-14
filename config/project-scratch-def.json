@@ -1,7 +1,7 @@
 {
   "orgName": "meckert company",
-  "edition": "Developer",
-  "features": ["EnableSetPasswordInApi"],
+  "edition": "Enterprise",
+  "features": ["EnableSetPasswordInApi", "SalesCloudEinstein"],
   "settings": {
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true

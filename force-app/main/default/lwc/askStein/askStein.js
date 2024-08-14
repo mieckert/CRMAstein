@@ -21,9 +21,10 @@ export default class AskStein extends LightningElement {
     spinner = false;
     
     selectionChanged = undefined;
-    @api stateChangedCallback(prevState, newState) {
-        if(this.selection_changed == false) {
-            this.selection_changed = true;
+    // eslint-disable-next-line no-unused-vars
+    @api stateChangedCallback(_prevState, _newState) {
+        if(this.selectionChanged === false) {
+            this.selectionChanged = true;
         }        
     }
 
@@ -40,10 +41,9 @@ export default class AskStein extends LightningElement {
         if(this.twoColumns) {
             return `height: calc(100% - ${this.headingHeight}px)`;
         }
-        else {
-            let h = (this.containerHeight - this.headingHeight) * 0.3;
-            return `height: ${h}px`;
-        }        
+        
+        let h = (this.containerHeight - this.headingHeight) * 0.3;
+        return `height: ${h}px`;                
     }
 
     get textareaStyle() {
@@ -60,11 +60,9 @@ export default class AskStein extends LightningElement {
     get outputStyle() {
         if(this.twoColumns) {
             return `height: calc(100% - ${this.headingHeight}px)`;
-        }
-        else {
-            let h = (this.containerHeight - this.headingHeight) * 0.7
-            return `height: ${h}px`;            
-        }
+        }        
+        let h = (this.containerHeight - this.headingHeight) * 0.7
+        return `height: ${h}px`;                    
     }
 
     get outputParagraphs() {
@@ -120,7 +118,7 @@ export default class AskStein extends LightningElement {
     }
 
     async showData() {
-        let _ = await LightningAlert.open({
+        await LightningAlert.open({
             message: JSON.stringify(this.results),            
             label: 'Data',
             theme: 'inverse'
@@ -128,7 +126,7 @@ export default class AskStein extends LightningElement {
     }
 
     async showPrompt() {
-        let _ = await LightningAlert.open({
+        await LightningAlert.open({
             message: this.generatePrompt(),            
             label: 'Prompt',
             theme: 'inverse'
